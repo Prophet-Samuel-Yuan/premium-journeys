@@ -1,3 +1,4 @@
+import { supabase } from "@/integrations/supabase/client";
 
 export interface Itinerary {
   id: string;
@@ -12,60 +13,34 @@ export interface Itinerary {
   slug?: string;
 }
 
-const API_KEY = import.meta.env.VITE_AIRTABLE_API_KEY;
-const BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
-const TABLE_NAME = 'Itineraries';
-
 export async function fetchItineraries(): Promise<Itinerary[]> {
-    if (!API_KEY || !BASE_ID) {
-        console.error('Airtable credentials missing');
-        return [];
+  try {
+    const { data, error } = await supabase.functions.invoke('airtable-proxy');
+
+    if (error) {
+      console.error('Error fetching itineraries:', error.message);
+      return [];
     }
 
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`;
-    try {
-        const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${API_KEY}`
-            }
-        });
-        if (!response.ok) {
-            throw new Error(`Error fetching itineraries: ${response.statusText} (${response.status})`);
-        }
-        const data = await response.json();
-        return data.records.map((record: any) => ({
-            id: record.id,
-            ...record.fields
-        }));
-    } catch (error) {
-        console.error('Failed to fetch itineraries:', error);
-        return [];
-    }
+    return data || [];
+  } catch (error) {
+    console.error('Failed to fetch itineraries:', error);
+    return [];
+  }
 }
 
 export async function fetchItineraryById(id: string): Promise<Itinerary | null> {
-    if (!API_KEY || !BASE_ID) {
-        console.error('Airtable credentials missing');
-        return null;
+  try {
+    const { data, error } = await supabase.functions.invoke(`airtable-proxy?action=getById&id=${encodeURIComponent(id)}`);
+
+    if (error) {
+      console.error(`Error fetching itinerary ${id}:`, error.message);
+      return null;
     }
 
-    const url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}/${id}`;
-    try {
-        const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${API_KEY}`
-            }
-        });
-        if (!response.ok) {
-            throw new Error(`Error fetching itinerary ${id}: ${response.statusText} (${response.status})`);
-        }
-        const record = await response.json();
-        return {
-            id: record.id,
-            ...record.fields
-        };
-    } catch (error) {
-        console.error(`Failed to fetch itinerary ${id}:`, error);
-        return null;
-    }
+    return data || null;
+  } catch (error) {
+    console.error(`Failed to fetch itinerary ${id}:`, error);
+    return null;
+  }
 }

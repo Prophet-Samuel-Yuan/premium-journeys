@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useItinerary } from "@/hooks/useItineraries";
 import { ArrowLeft, Clock, MapPin, CheckCircle, Loader2 } from "lucide-react";
+import DOMPurify from "dompurify";
 import { resolveItineraryImage } from "@/lib/image-resolver";
 
 const ItineraryDetail = () => {
@@ -81,7 +82,12 @@ const ItineraryDetail = () => {
                 <h2 className="text-2xl font-serif mb-6">About This Journey</h2>
                 <div
                   className="text-muted-foreground font-sans leading-relaxed mb-8 whitespace-pre-line"
-                  dangerouslySetInnerHTML={{ __html: itinerary.Content || itinerary.Description || 'Bespoke itinerary crafted for the modern explorer.' }}
+                  dangerouslySetInnerHTML={{ 
+                    __html: DOMPurify.sanitize(
+                      itinerary.Content || itinerary.Description || 'Bespoke itinerary crafted for the modern explorer.',
+                      { ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }
+                    ) 
+                  }}
                 />
 
                 {/* Highlights from Airtable if available */}
