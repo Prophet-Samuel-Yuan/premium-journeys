@@ -1,9 +1,11 @@
-import { getItinerariesByCategory } from "@/data/itineraries";
+import { useItineraries } from "@/hooks/useItineraries";
 import { ItineraryCard } from "@/components/ItineraryCard";
-import { Compass } from "lucide-react";
+import { Compass, Loader2 } from "lucide-react";
 
 export const PersonalTravelSection = () => {
-  const itineraries = getItinerariesByCategory("personal");
+  const { data: itineraries, isLoading, error } = useItineraries();
+
+  const filteredItineraries = itineraries?.filter(i => i.category === "personal") || [];
 
   return (
     <section id="personal-travel" className="py-24 lg:py-32 bg-background">
@@ -25,11 +27,21 @@ export const PersonalTravelSection = () => {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {itineraries.map((itinerary) => (
-            <ItineraryCard key={itinerary.id} itinerary={itinerary} />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="flex justify-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : error ? (
+          <div className="text-center py-12 text-destructive">
+            Failed to load itineraries. Please check your connection.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredItineraries.map((itinerary) => (
+              <ItineraryCard key={itinerary.id} itinerary={itinerary} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

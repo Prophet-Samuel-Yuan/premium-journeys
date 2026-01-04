@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Detail | 1st Landing Tours</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .detail-hero {
+            height: 60vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 50px;
+            position: relative;
+        }
+
+        .detail-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
+        }
+
+        .detail-header {
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .detail-content {
+            padding: 80px 0;
+        }
+
+        .price-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: #a68648;
+            font-weight: 600;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .itinerary-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #4a4a4a;
+        }
+
+        .back-btn {
+            margin-bottom: 20px;
+            display: inline-block;
+            color: #a68648;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="navbar" class="scrolled">
+        <div class="logo">1<sup>ST</sup> LANDING</div>
+        <ul class="nav-links">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#tours">Tours</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <a href="index.html#contact" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.7rem;">Inquire
+            Now</a>
+    </nav>
+
+    <div id="detail-container">
+        <div class="loading" style="padding: 100px; text-align: center;">Curating your journey details...</div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 1st Landing Tours. All Rights Reserved. Luxury Travel License #82910-A</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="detail.js"></script>
+</body>
+
+</html>
