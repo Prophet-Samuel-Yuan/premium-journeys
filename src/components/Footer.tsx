@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.png";
 
 export const Footer = () => {
   return (
@@ -9,11 +8,11 @@ export const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link to="/" className="inline-block mb-6">
-              <img 
-                src={logo} 
-                alt="First Landing 领拓国旅" 
-                className="h-16 w-auto brightness-0 invert"
-              />
+              <span className="text-2xl font-serif tracking-wide">
+                <span className="text-foreground">1</span>
+                <sup className="text-primary text-sm">ST</sup>
+                <span className="text-foreground ml-1">LANDING</span>
+              </span>
             </Link>
             <p className="text-muted-foreground font-sans leading-relaxed max-w-md">
               At 1st Landing Tours, we believe travel is an art. From the neon-lit skyline of Shanghai 
