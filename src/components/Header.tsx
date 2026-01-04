@@ -52,8 +52,8 @@ export const Header = () => {
           <Link to="/" className="flex items-center">
             <img 
               src={logo} 
-              alt="1st Landing Tours" 
-              className="h-10 lg:h-12 w-auto"
+              alt="First Landing 领拓国旅" 
+              className="h-14 lg:h-16 w-auto rounded-md"
             />
           </Link>
 
