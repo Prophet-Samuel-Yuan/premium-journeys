@@ -11,8 +11,8 @@ export const Footer = () => {
             <Link to="/" className="inline-block mb-6">
               <img 
                 src={logo} 
-                alt="1st Landing Tours" 
-                className="h-10 w-auto"
+                alt="First Landing 领拓国旅" 
+                className="h-16 w-auto rounded-md"
               />
             </Link>
             <p className="text-muted-foreground font-sans leading-relaxed max-w-md">
