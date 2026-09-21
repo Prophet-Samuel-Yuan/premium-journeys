@@ -6,6 +6,7 @@ import { useItinerary } from "@/hooks/useItineraries";
 import { ArrowLeft, Clock, MapPin, CheckCircle, Loader2 } from "lucide-react";
 import DOMPurify from "dompurify";
 import { resolveItineraryImage } from "@/lib/image-resolver";
+import { CoverPoster } from "@/components/CoverPoster";
 
 const ItineraryDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -49,25 +50,36 @@ const ItineraryDetail = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        {/* Hero */}
-        <section className="relative h-[60vh] min-h-[400px] flex items-end">
-          <div className="absolute inset-0">
+        {/* Poster — contained so portrait marketing covers are fully visible */}
+        <section className="relative overflow-hidden pt-24 lg:pt-28 pb-10">
+          <div className="pointer-events-none absolute inset-0" aria-hidden>
             <img
               src={imageUrl}
-              alt={itinerary.Title}
-              className="w-full h-full object-cover"
+              alt=""
+              className="h-full w-full scale-110 object-cover opacity-40 blur-3xl"
             />
-            <div className="absolute inset-0 bg-gradient-overlay" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/45 to-background" />
           </div>
-          <div className="relative z-10 container mx-auto px-6 lg:px-12 pb-12">
+
+          <div className="relative z-10 container mx-auto px-6 lg:px-12 mb-6">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-foreground/80 hover:text-primary transition-colors"
             >
               <ArrowLeft size={20} />
               <span className="font-sans text-sm uppercase tracking-wider">Back to Home</span>
             </Link>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium mb-2">
+          </div>
+
+          <CoverPoster
+            src={imageUrl}
+            alt={itinerary.Title}
+            variant="hero"
+            className="relative z-10"
+          />
+
+          <div className="relative z-10 container mx-auto px-6 lg:px-12 mt-8">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-medium text-center">
               {itinerary.Title}
             </h1>
           </div>
