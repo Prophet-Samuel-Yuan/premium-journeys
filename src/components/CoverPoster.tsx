@@ -4,47 +4,48 @@ interface CoverPosterProps {
   src: string;
   alt: string;
   className?: string;
-  /** `hero` fits the full poster in the viewport; `card` shows it at the card width. */
+  /** `hero` is a centered readable poster; `card` fills the card width. */
   variant?: "hero" | "card";
+  width?: number;
+  height?: number;
 }
 
 /**
- * Renders itinerary CoverImages as full marketing posters (typically ~9:16).
- * Uses object-contain so title, price, and destination strips are never cropped.
+ * Full marketing poster. Natural aspect ratio, no object-cover, no viewport
+ * max-height — the page scrolls so title/price/destination rows stay visible.
  */
 export const CoverPoster = ({
   src,
   alt,
   className,
   variant = "card",
+  width,
+  height,
 }: CoverPosterProps) => {
+  const ratio =
+    width && height ? ({ aspectRatio: `${width} / ${height}` } as const) : undefined;
+
+  const image = (
+    <img
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      className={cn(
+        "block h-auto w-full max-w-full",
+        variant === "hero" && "rounded-sm shadow-elegant ring-1 ring-primary/25",
+      )}
+      style={ratio}
+    />
+  );
+
   if (variant === "hero") {
     return (
-      <figure className={cn("relative flex justify-center px-6 lg:px-12", className)}>
-        <div className="overflow-hidden rounded-sm bg-navy shadow-elegant ring-1 ring-primary/25">
-          <img
-            src={src}
-            alt={alt}
-            className="block h-auto w-auto max-h-[calc(100svh-14rem)] max-w-full object-contain"
-          />
-        </div>
+      <figure className={cn("relative mx-auto w-full max-w-2xl shrink-0 px-6", className)}>
+        {image}
       </figure>
     );
   }
 
-  return (
-    <div className={cn("relative overflow-hidden bg-navy", className)}>
-      <img
-        src={src}
-        alt=""
-        aria-hidden
-        className="absolute inset-0 h-full w-full scale-110 object-cover opacity-40 blur-2xl"
-      />
-      <img
-        src={src}
-        alt={alt}
-        className="relative z-10 h-auto w-full object-contain object-center"
-      />
-    </div>
-  );
+  return <div className={cn("relative w-full shrink-0 bg-navy", className)}>{image}</div>;
 };

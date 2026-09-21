@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import type { CoverAttachment } from "@/lib/image-resolver";
 
 export interface Itinerary {
   id: string;
@@ -6,7 +7,7 @@ export interface Itinerary {
   Description?: string;
   Content?: string;
   Price?: number;
-  CoverImage?: { url: string }[];
+  CoverImage?: CoverAttachment[];
   category?: 'personal' | 'team-building' | 'business';
   highlights?: string[];
   duration?: string;

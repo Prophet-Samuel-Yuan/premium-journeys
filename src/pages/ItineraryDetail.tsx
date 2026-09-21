@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useItinerary } from "@/hooks/useItineraries";
 import { ArrowLeft, Clock, MapPin, CheckCircle, Loader2 } from "lucide-react";
 import DOMPurify from "dompurify";
-import { resolveItineraryImage } from "@/lib/image-resolver";
+import { resolveCover } from "@/lib/image-resolver";
 import { CoverPoster } from "@/components/CoverPoster";
 
 const ItineraryDetail = () => {
@@ -44,15 +44,17 @@ const ItineraryDetail = () => {
     );
   }
 
-  const imageUrl = resolveItineraryImage(itinerary.CoverImage?.[0]?.url);
+  const { src: imageUrl, width: coverWidth, height: coverHeight } = resolveCover(
+    itinerary.CoverImage,
+  );
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        {/* Poster — contained so portrait marketing covers are fully visible */}
-        <section className="relative overflow-hidden pt-24 lg:pt-28 pb-10">
-          <div className="pointer-events-none absolute inset-0" aria-hidden>
+        {/* Full portrait poster — natural height, page scrolls; no viewport crop */}
+        <section className="relative pt-24 lg:pt-28 pb-10">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
             <img
               src={imageUrl}
               alt=""
@@ -75,6 +77,8 @@ const ItineraryDetail = () => {
             src={imageUrl}
             alt={itinerary.Title}
             variant="hero"
+            width={coverWidth}
+            height={coverHeight}
             className="relative z-10"
           />
 
