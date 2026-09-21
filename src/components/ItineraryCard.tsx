@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Itinerary } from "@/integrations/airtable";
 import { ArrowRight } from "lucide-react";
-import { resolveItineraryImage } from "@/lib/image-resolver";
+import { resolveCover } from "@/lib/image-resolver";
 import { CoverPoster } from "@/components/CoverPoster";
 
 interface ItineraryCardProps {
@@ -9,7 +9,9 @@ interface ItineraryCardProps {
 }
 
 export const ItineraryCard = ({ itinerary }: ItineraryCardProps) => {
-  const imageUrl = resolveItineraryImage(itinerary.CoverImage?.[0]?.url);
+  const { src: imageUrl, width: coverWidth, height: coverHeight } = resolveCover(
+    itinerary.CoverImage,
+  );
 
   return (
     <Link
@@ -20,7 +22,9 @@ export const ItineraryCard = ({ itinerary }: ItineraryCardProps) => {
         src={imageUrl}
         alt={itinerary.Title}
         variant="card"
-        className="border-b border-primary/15"
+        width={coverWidth}
+        height={coverHeight}
+        className="shrink-0 border-b border-primary/15"
       />
 
       <div className="flex flex-1 flex-col p-6">
