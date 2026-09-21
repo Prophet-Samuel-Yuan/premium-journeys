@@ -13,16 +13,18 @@ export interface Itinerary {
   slug?: string;
 }
 
-/** Airtable currently names the currency field "Price (CNY)"; keep `Price` for the UI. */
+/** Airtable field names that differ from the UI model. */
 type AirtableItineraryRaw = Itinerary & {
   'Price (CNY)'?: number;
+  Category?: Itinerary['category'];
 };
 
 function normalizeItinerary(raw: AirtableItineraryRaw): Itinerary {
-  const { 'Price (CNY)': priceCny, ...rest } = raw;
+  const { 'Price (CNY)': priceCny, Category, ...rest } = raw;
   return {
     ...rest,
     Price: raw.Price ?? priceCny,
+    category: raw.category ?? Category,
   };
 }
 

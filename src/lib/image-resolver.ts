@@ -8,8 +8,8 @@ const tourImages: Record<string, any> = import.meta.glob(
 export const resolveItineraryImage = (url?: string) => {
     if (!url) return 'https://via.placeholder.com/600x400';
 
-    // If it's already a full URL (from Airtable), return it
-    if (url.startsWith('http')) return url;
+    // Airtable attachments, or files already on this origin (e.g. /covers/egypt.jpg)
+    if (url.startsWith('http') || url.startsWith('/')) return url;
 
     // Match the local image name from imported assets
     const imagePath = Object.keys(tourImages).find(path => path.includes(url));
