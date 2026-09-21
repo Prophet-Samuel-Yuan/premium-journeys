@@ -132,7 +132,7 @@ const ItineraryDetail = () => {
                       <div>
                         <p className="text-sm text-muted-foreground font-sans">Starting from</p>
                         <p className="text-foreground font-medium capitalize">
-                          {itinerary.Price ? `$${itinerary.Price.toLocaleString()}` : 'Quote on request'}
+                          {itinerary.Price ? `¥${itinerary.Price.toLocaleString('zh-CN')}` : 'Quote on request'}
                         </p>
                       </div>
                     </div>
